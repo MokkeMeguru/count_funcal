@@ -2,3 +2,4 @@
 "example/example.py"	"[[""sayAnything"", 2], [""sayHello"", 1], [""Introduction"", 1]]"
 "example/utils/utils.py"	"[[""sayAnything"", 1], [""print"", 1]]"
 "example/utils/__init__.py"	"[]"
+"all"	"[[""sayAnything"", 3], [""sayHello"", 1], [""Introduction"", 1], [""print"", 1]]"

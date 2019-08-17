@@ -4,6 +4,7 @@ import argparse
 import os
 import json
 import csv
+from functools import reduce
 
 
 def walktree(node):
@@ -26,7 +27,7 @@ def get_described_func(filename):
         c = collections.Counter(funcallList)
         print("filename: {}".format(filename))
         print("described func: {}".format(c.most_common()))
-        return [filename, json.dumps(c.most_common())]
+        return [filename, c]
 
 
 if __name__ == '__main__':
@@ -58,4 +59,7 @@ if __name__ == '__main__':
                     res.append(get_described_func(os.path.join(root, f)))
     with open(args.output, 'w') as d:
         writer = csv.writer(d, delimiter='\t', quoting=csv.QUOTE_ALL)
-        writer.writerows(res)
+        writer.writerows([[row[0], json.dumps(row[1].most_common())]
+                          for row in res])
+        res = reduce(lambda x, y: x + y, [element[1] for element in res])
+        writer.writerow(["all", json.dumps(res.most_common())])
