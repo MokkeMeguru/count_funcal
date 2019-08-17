@@ -1,0 +1,50 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
+#+options: broken-links:nil c:nil creator:nil d:(not "LOGBOOK") date:t e:t
+#+options: email:nil f:t inline:t num:t p:nil pri:nil prop:nil stat:t tags:t
+#+options: tasks:t tex:t timestamp:t title:t toc:t todo:t |:t
+#+title: Python static funcall counter
+#+date: <2019-08-17 土>
+#+author: MokkeMeguru
+#+email: meguru.mokke@gmail.com
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 26.2 (Org mode 9.2.4)
+
+
+* Requirement
+  - Python > 3.6
+  - Mac or Linux
+
+* How to run this project
+  #+begin_src shell
+  python -m venv venv
+  source venv/bin/activate
+  python -m example.example
+  # Hello!
+  # My name is Mokke
+  # Nice to meet you!
+  python -m parse_as_ast -f example/example.py -t single-file
+  # filename: example/example.py
+  # described func: Counter({'sayAnything': 2, 'sayHello': 1, 'Introduction': 1}) 
+  python -m parse_as_ast -f example -t dir -o dumps.tsv
+  # filename: example/__init__.py
+  # described func: []
+  # filename: example/example.py
+  # described func: [('sayAnything', 2), ('sayHello', 1), ('Introduction', 1)]
+  # filename: example/utils/utils.py
+  # described func: [('sayAnything', 1), ('print', 1)]
+  # filename: example/utils/__init__.py
+  # described func: []
+  cat dumps.tsv
+  # "example/__init__.py"	"[]"
+  # "example/example.py"	"[[""sayAnything"", 2], [""sayHello"", 1], [""Introduction"", 1]]"
+  # "example/utils/utils.py"	"[[""sayAnything"", 1], [""print"", 1]]"
+  # "example/utils/__init__.py"	"[]"
+  #+end_src
+
+* Problem
+  - Consistency of the called function
+    
+    We cannot determin which  the function is #'hoge.foo or #'bar.foo.
+  
