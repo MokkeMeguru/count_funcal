@@ -20,9 +20,9 @@ def get_described_func(filename):
     with open(filename, 'r') as f:
         source = f.read()
         tree = ast.parse(source, filename)
-        # walktree(tree)
         funcallList = [
-            x.func.id for x in ast.walk(tree) if isinstance(x, ast.Call)
+            x.func.id for x in ast.walk(tree)
+            if isinstance(x, ast.Call) and "id" in dir(x.func)
         ]
         c = collections.Counter(funcallList)
         print("filename: {}".format(filename))
